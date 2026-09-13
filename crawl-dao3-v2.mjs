@@ -23,6 +23,8 @@ const LIMIT = parseInt(arg('--limit', '0')) || 0;
 const OUT = arg('--out', '/workspace/dao3-crawl');
 const WITH_ASSETS = process.argv.includes('--assets');
 const WITH_LOGIN = process.argv.includes('--login');
+const LIST_ONLY = process.argv.includes('--list-only');
+const CMAX = parseInt(arg('--cmax', '0')) || 0; // 评论全局上限（0=不限制，单作品仍受 5000 保护）
 
 const H = { 'User-Agent': 'Mozilla/5.0', Accept: 'application/json' };
 if (WITH_LOGIN) {
@@ -80,8 +82,11 @@ async function crawlModels(limit) {
     if (!j || !j.rows || !j.rows.length) break;
     for (const m of j.rows) {
       if (ids.includes(m.id)) continue; ids.push(m.id);
-      const d = await getJSON(`https://code-api-pc.dao3.fun/model/v2?modelId=${m.id}`);
-      const full = (d && d.data) ? d.data : m;
+      let full = m;
+      if (!LIST_ONLY) {
+        const d = await getJSON(`https://code-api-pc.dao3.fun/model/v2?modelId=${m.id}`);
+        if (d && d.data) full = d.data;
+      }
       writeFileSync(`${OUT}/models/${m.id}.json`, JSON.stringify(full));
       // 可选下载 3D 资产
       if (WITH_ASSETS && full.modelFileHash) {
@@ -102,16 +107,18 @@ async function crawlComments(ids, type) {
   mkdirSync(OUT + '/comments', { recursive: true });
   let total = 0;
   for (const id of ids) {
+    if (CMAX && total >= CMAX) { console.log(`[comment] 已达全局上限 ${CMAX}，停止`); break; }
     let off = 0; const rows = [];
     while (true) {
       const j = await getJSON(`https://code-api-pc.dao3.fun/comment/list?type=${type}&id=${id}&offset=${off}&limit=20`);
       if (!j || !j.data || !j.data.rows || !j.data.rows.length) break;
       rows.push(...j.data.rows); off += 20; await sleep(120);
       if (rows.length > 5000) break; // 单作品评论上限保护
+      if (CMAX && total + rows.length >= CMAX) break;
     }
     writeFileSync(`${OUT}/comments/${type}_${id}.json`, JSON.stringify(rows));
     total += rows.length;
-    console.log(`[comment ${type}] ${id} -> ${rows.length} 条`);
+    console.log(`[comment ${type}] ${id} -> ${rows.length} 条 (累计 ${total})`);
   }
   return total;
 }

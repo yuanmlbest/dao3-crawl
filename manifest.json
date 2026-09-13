@@ -5,19 +5,19 @@
   "counts": {
     "maps": 7466,
     "models": 130528,
-    "comments": 7,
+    "comments": 15,
     "commentMaxPerItem": 5000
   },
   "sizesMB": {
     "maps": 30,
     "models": 46.3,
-    "comments": 13,
-    "total": 42
+    "comments": 62.7,
+    "total": "139.0"
   },
   "scope": {
     "maps": "full",
     "models": "full (~130k, chunked)",
-    "comments": "partial (in progress, 35140 so far)"
+    "comments": "in progress (75300 so far; crawl still running)"
   },
   "endpoints": {
     "mapList": "https://dao3.fun/api/list-maps?offset=&limit=32&tabKey1=<tab>&lang=zh",
