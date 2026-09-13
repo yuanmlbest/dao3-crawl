@@ -1,0 +1,37 @@
+{
+  "source": "dao3.fun (神岛 / Box3)",
+  "crawlDate": "2026-09-13",
+  "description": "dao3 公开接口爬取的地图/模型/评论 UGC 数据，供 nexisle.space 引擎世界库使用",
+  "counts": {
+    "maps": 7466,
+    "models": 40,
+    "comments": 3,
+    "commentMaxPerItem": 5000
+  },
+  "sizesMB": {
+    "maps": 30,
+    "models": 0.16,
+    "comments": 13,
+    "total": 42
+  },
+  "scope": {
+    "maps": "full",
+    "models": "sample (newest 40)",
+    "comments": "sample (3 threads, capped at 5000 each)"
+  },
+  "endpoints": {
+    "mapList": "https://dao3.fun/api/list-maps?offset=&limit=32&tabKey1=<tab>&lang=zh",
+    "modelList": "https://dao3.fun/api/page-translated-newest-model?offset=&limit=50&lang=zh",
+    "mapDetail": "https://code-api-pc.dao3.fun/map/detail?mapId=<contentId>",
+    "modelDetail": "https://code-api-pc.dao3.fun/model/v2?modelId=<id>",
+    "modelAsset": "https://assets.box3.fun/engine/m/<modelFileHash>",
+    "commentList": "https://code-api-pc.dao3.fun/comment/list?type=map|model&id=<id>&offset=&limit=20"
+  },
+  "auth": "all endpoints public, no login required",
+  "schema": {
+    "map": ["mapId", "appId", "authorId", "title", "cover", "description"],
+    "model": ["id", "title", "modelType", "previewUrl", "modelFileHash", "author"],
+    "comment": ["id", "comment", "createdAt", "userInfo", "likeCount", "replyList"]
+  },
+  "license": "UGC — copyright belongs to original authors; repository private by default"
+}
