@@ -4,20 +4,20 @@
   "description": "dao3 公开接口爬取的地图/模型/评论 UGC 数据，供 nexisle.space 引擎世界库使用",
   "counts": {
     "maps": 7466,
-    "models": 40,
-    "comments": 3,
+    "models": 130528,
+    "comments": 7,
     "commentMaxPerItem": 5000
   },
   "sizesMB": {
     "maps": 30,
-    "models": 0.16,
+    "models": 46.3,
     "comments": 13,
     "total": 42
   },
   "scope": {
     "maps": "full",
-    "models": "sample (newest 40)",
-    "comments": "sample (3 threads, capped at 5000 each)"
+    "models": "full (~130k, chunked)",
+    "comments": "partial (in progress, 35140 so far)"
   },
   "endpoints": {
     "mapList": "https://dao3.fun/api/list-maps?offset=&limit=32&tabKey1=<tab>&lang=zh",
@@ -29,9 +29,31 @@
   },
   "auth": "all endpoints public, no login required",
   "schema": {
-    "map": ["mapId", "appId", "authorId", "title", "cover", "description"],
-    "model": ["id", "title", "modelType", "previewUrl", "modelFileHash", "author"],
-    "comment": ["id", "comment", "createdAt", "userInfo", "likeCount", "replyList"]
+    "map": [
+      "mapId",
+      "appId",
+      "authorId",
+      "title",
+      "cover",
+      "description"
+    ],
+    "model": [
+      "id",
+      "title",
+      "modelType",
+      "previewUrl",
+      "modelFileHash",
+      "author"
+    ],
+    "comment": [
+      "id",
+      "comment",
+      "createdAt",
+      "userInfo",
+      "likeCount",
+      "replyList"
+    ]
   },
-  "license": "UGC — copyright belongs to original authors; repository private by default"
+  "license": "UGC — copyright belongs to original authors; repository private by default",
+  "crawledAt": "2026-09-13"
 }

@@ -1,0 +1,21 @@
+{
+  "total": 130528,
+  "chunkSize": 10000,
+  "chunks": [
+    "models_part_001.json",
+    "models_part_002.json",
+    "models_part_003.json",
+    "models_part_004.json",
+    "models_part_005.json",
+    "models_part_006.json",
+    "models_part_007.json",
+    "models_part_008.json",
+    "models_part_009.json",
+    "models_part_010.json",
+    "models_part_011.json",
+    "models_part_012.json",
+    "models_part_013.json",
+    "models_part_014.json"
+  ],
+  "note": "全量模型元数据，拆分为多片以规避 GitHub 单文件 100MB 上限；按 models_manifest.json 的 chunks 顺序拼接即为完整数据"
+}
